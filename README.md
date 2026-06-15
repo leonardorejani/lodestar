@@ -252,10 +252,6 @@ Dá. Use o lodestar como porta de entrada leve (gera <code>spec.md</code>/<code>
 
 ---
 
-## 🙏 Créditos & inspiração
-
-Construído sobre as ideias de [GitHub Spec Kit](https://github.com/github/spec-kit) (governance + clarify/analyze) e [OpenSpec](https://github.com/Fission-AI/OpenSpec) (spec viva + delta/archive), e inspirado no [specdd-starter-pack](https://github.com/andrey-rsantos/specdd-starter-pack) que mostrou o valor do mínimo-que-funciona.
-
 ## 📄 Licença
 
 [MIT](LICENSE) — use, modifique e compartilhe livremente.
