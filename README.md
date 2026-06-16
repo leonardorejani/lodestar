@@ -240,10 +240,6 @@ Nunca sem te mostrar o diff e pedir ok. O <code>scaffold.mjs</code> pula arquivo
 
 ---
 
-## 🙏 Créditos & inspiração
-
-[GitHub Spec Kit](https://github.com/github/spec-kit) (governance + clarify/analyze), [OpenSpec](https://github.com/Fission-AI/OpenSpec) (spec viva + delta/archive) e [specdd-starter-pack](https://github.com/andrey-rsantos/specdd-starter-pack) (o mínimo-que-funciona).
-
 ## 📄 Licença
 
 [MIT](LICENSE) — use, modifique e compartilhe livremente.
