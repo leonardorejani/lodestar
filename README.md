@@ -2,8 +2,6 @@
 
 <img src="assets/nether-star.svg" alt="estrela-guia" width="130">
 
-<img src="assets/lodestar.svg" alt="lodestar" width="520">
-
 ### A spec é a estrela que guia o seu projeto no desenvolvimento com IA.
 
 **Spec-Driven Development (SDD) como _plugin_ do [Claude Code](https://claude.com/claude-code).**
