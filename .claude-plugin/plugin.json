@@ -1,7 +1,7 @@
 {
   "name": "lodestar",
-  "version": "1.0.0",
-  "description": "Spec-Driven Development for Claude Code — especifique, planeje e construa a feature certa com docs vivos como fonte da verdade. Adaptativo em 3 niveis (micro a sistema). Fluxo specify -> clarify -> plan -> tasks -> analyze -> implement -> archive. PT-BR.",
+  "version": "1.1.0",
+  "description": "Spec-Driven Development for Claude Code — especifique, planeje e construa a feature certa com docs vivos como fonte da verdade. Adaptativo em 3 niveis (micro a sistema). No N3, instala a camada de qualidade (CI, PR, merge seguro, validators, deploy) com /lodestar:harden. PT-BR.",
   "author": {
     "name": "Leonardo Rejani"
   },

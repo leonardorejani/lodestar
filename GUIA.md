@@ -89,7 +89,7 @@ Se ele nao souber citar a fonte nos docs, ou esta inventando, ou a spec esta inc
 Veja `NIVEIS.md`. Resumo: comeca pequeno, sobe quando doer.
 - 2a feature/deploy -> N2
 - multi-tenant/clientes/time -> N3
-- CI/PR/deploy automatico -> N3 + keepwright (o /lodestar:init te oferece isso)
+- CI/PR/deploy automatico -> N3: rode `/lodestar:harden`
 - execucao pesada multi-fase -> N3 + executor de fases
 
 ---
@@ -113,7 +113,7 @@ Veja `NIVEIS.md`. Resumo: comeca pequeno, sobe quando doer.
 
 **Preciso seguir as 9 etapas sempre?** Nao. Em N1 sao 3. Em N2/N3 use o que a feature pede; so nao pule `/lodestar:analyze` antes de implementar.
 
-**E a infra de CI/PR/deploy?** Nao e escopo do lodestar — e do keepwright (https://github.com/leonardocandiani/keepwright). O N3 te aponta pra ele. Combo: lodestar constroi, keepwright mantem.
+**E a infra de CI/PR/deploy?** O lodestar faz no N3: rode `/lodestar:harden` pra instalar constituicao equalizada, rules, CI, PR flow, merge seguro, validators e deploy por stack.
 
 **Funciona fora da minha stack?** Sim. Os templates vem temperados pra TS/React/Supabase, mas as secoes especificas viram "N/A" em outras stacks.
 

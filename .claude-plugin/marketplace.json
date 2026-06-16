@@ -5,13 +5,13 @@
   },
   "metadata": {
     "description": "lodestar — Spec-Driven Development como plugin do Claude Code. A spec e a estrela que guia o seu projeto.",
-    "version": "1.0.0"
+    "version": "1.1.0"
   },
   "plugins": [
     {
       "name": "lodestar",
-      "description": "Spec-Driven Development: specify -> clarify -> plan -> tasks -> analyze -> implement -> archive, com docs vivos como fonte da verdade. Adaptativo em 3 niveis (micro a sistema). PT-BR, temperado pra TS/React/Supabase.",
-      "version": "1.0.0",
+      "description": "Spec-Driven Development: specify -> clarify -> plan -> tasks -> analyze -> implement -> archive, com docs vivos como fonte da verdade. No N3, instala a camada de qualidade (CI, PR, merge seguro, validators, deploy) com /lodestar:harden. Adaptativo em 3 niveis. PT-BR, temperado pra TS/React/Supabase.",
+      "version": "1.1.0",
       "author": {
         "name": "Leonardo Rejani"
       },

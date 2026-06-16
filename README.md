@@ -36,7 +36,7 @@ Instala, roda `/lodestar:init` e começa a codar com IA **sem perder o controle 
 - [O fluxo SDD](#-o-fluxo-sdd)
 - [3 níveis adaptativos](#-3-níveis-adaptativos)
 - [Engine determinístico](#️-engine-determinístico)
-- [O combo: lodestar + keepwright](#-o-combo-lodestar--keepwright)
+- [Qualidade no N3 (harden)](#️-qualidade-no-n3-harden)
 - [Estrutura](#-estrutura)
 - [Exemplo real](#-exemplo-real)
 - [FAQ](#-faq)
@@ -91,7 +91,7 @@ Ferramentas de SDD existem (GitHub Spec Kit, OpenSpec, Kiro...), mas ou são pes
 |---|---|
 | 🏛️ **GitHub Spec Kit** (governance) | constituição + fluxo `specify → clarify → plan → tasks → analyze → implement` |
 | 🔄 **OpenSpec** (continuity) | `spec.md` **viva** + `changes/` com delta specs arquivados na spec ao fechar |
-| ⚙️ **keepwright** (packaging) | empacotamento como plugin + engine determinístico + estrutura OSS |
+| ⚙️ **engenharia embutida** | camada de qualidade no N3 (CI, PR, merge seguro, validators, deploy) via `/lodestar:harden` |
 
 **Princípio central:** a spec é a lei, o código é consequência. Mudou regra/contrato? A spec atualiza **no mesmo PR**. A spec **nunca envelhece** — toda feature fechada é arquivada nela.
 
@@ -110,6 +110,7 @@ Ferramentas de SDD existem (GitHub Spec Kit, OpenSpec, Kiro...), mas ou são pes
 | `/lodestar:implement` | Executa (solo, agentes ou pipeline) |
 | `/lodestar:checklist` | Definition of Done testável |
 | `/lodestar:archive` | Fecha a feature: o delta vira parte da spec viva |
+| `/lodestar:harden` | **N3:** instala a camada de qualidade (CI, PR, merge, validators, deploy) |
 
 No dia a dia você nem decora: pede *"implementa a feature X"* e a skill roteia pela etapa certa.
 
@@ -152,6 +153,9 @@ Não é só markdown — o plugin traz scripts Node (zero deps) pra a parte mec�
 # instancia os docs do nível num projeto
 node scripts/scaffold.mjs --level N2 --dest .
 
+# instala a camada de qualidade (N3): rules, CI, validators, deploy
+node scripts/harden.mjs --dest . --stack vercel
+
 # gate de integridade (núcleo SDD + encoding + placeholders)
 node scripts/check-docs.mjs .
 
@@ -163,16 +167,15 @@ Os comandos chamam esses scripts pro trabalho determinístico; o modelo cuida do
 
 ---
 
-## 🤝 O combo: lodestar + keepwright
+## 🛡️ Qualidade no N3 (harden)
 
-São camadas **complementares**, não concorrentes:
+O lodestar não para na spec. No nível N3, um comando **blinda a engenharia**:
 
 ```
-lodestar   → decide e constrói a feature certa   (spec → plan → implement)
-keepwright → mantém qualidade, CI, PR, merge, deploy
+/lodestar:harden
 ```
 
-No **N3**, o `lodestar` delega a infra de engenharia pro [**keepwright**](https://github.com/leonardocandiani/keepwright). Use os dois juntos: um constrói o certo, o outro mantém saudável.
+Instala constituição equalizada, rules (P1–P5, merge seguro, PR flow, catalisação de lições), GitHub Actions (CI + review de IA + merge seguro com duplo gate), validators portáveis, hooks e deploy por stack (Vercel, Supabase, Docker, npm, Pages). Tudo dentro do plugin — você **constrói o certo e mantém saudável**, sem sair do lodestar.
 
 ---
 
@@ -181,9 +184,10 @@ No **N3**, o `lodestar` delega a infra de engenharia pro [**keepwright**](https:
 ```text
 lodestar/
 ├── .claude-plugin/      → plugin.json + marketplace.json
-├── commands/            → 9 comandos /lodestar:*
+├── commands/            → 10 comandos /lodestar:*
 ├── skills/lodestar/     → o cérebro (metodologia que roteia)
-├── scripts/             → scaffold.mjs · check-docs.mjs (engine)
+├── scripts/             → scaffold · check-docs · harden (engine)
+├── quality/             → camada de qualidade do N3 (rules, CI, validators, deploy)
 ├── validators/          → validate-encoding.cjs (anti-mojibake PT-BR)
 ├── templates/           → 9 moldes (TS/React/Vite/Supabase)
 ├── examples/linkfy/     → exemplo real preenchido
@@ -231,14 +235,14 @@ Nunca sem te mostrar o diff e pedir ok. O <code>scaffold.mjs</code> pula arquivo
 
 <details>
 <summary><b>E a infra de CI/PR/deploy?</b></summary>
-Não é escopo do lodestar — é do <a href="https://github.com/leonardocandiani/keepwright">keepwright</a>. O N3 te aponta pra ele.
+É o N3: rode <code>/lodestar:harden</code> pra instalar CI, PR flow, merge seguro, validators e deploy por stack — tudo dentro do plugin.
 </details>
 
 ---
 
 ## 🙏 Créditos & inspiração
 
-[GitHub Spec Kit](https://github.com/github/spec-kit) (governance + clarify/analyze), [OpenSpec](https://github.com/Fission-AI/OpenSpec) (spec viva + delta/archive), [keepwright](https://github.com/leonardocandiani/keepwright) (plugin packaging + estrutura OSS) e [specdd-starter-pack](https://github.com/andrey-rsantos/specdd-starter-pack) (o mínimo-que-funciona).
+[GitHub Spec Kit](https://github.com/github/spec-kit) (governance + clarify/analyze), [OpenSpec](https://github.com/Fission-AI/OpenSpec) (spec viva + delta/archive) e [specdd-starter-pack](https://github.com/andrey-rsantos/specdd-starter-pack) (o mínimo-que-funciona).
 
 ## 📄 Licença
 

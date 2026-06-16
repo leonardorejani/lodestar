@@ -30,7 +30,7 @@ jobs:
 
       - name: Check commands exist
         run: |
-          for c in init specify clarify plan tasks analyze implement checklist archive; do
+          for c in init specify clarify plan tasks analyze implement checklist archive harden; do
             test -f "commands/$c.md" || { echo "commands/$c.md missing"; exit 1; }
           done
 
@@ -43,9 +43,16 @@ jobs:
 
       - name: Check engine scripts exist
         run: |
-          for s in scripts/scaffold.mjs scripts/check-docs.mjs validators/validate-encoding.cjs; do
+          for s in scripts/scaffold.mjs scripts/check-docs.mjs scripts/harden.mjs validators/validate-encoding.cjs; do
             test -f "$s" || { echo "$s missing"; exit 1; }
           done
+
+      - name: Check quality layer present
+        run: |
+          for d in quality/rules quality/workflows quality/validators; do
+            test -d "$d" || { echo "$d missing"; exit 1; }
+          done
+          echo "quality layer: $(find quality -type f | wc -l) templates"
 
       - name: Verify all templates present
         run: |
@@ -65,6 +72,9 @@ jobs:
         run: |
           node scripts/scaffold.mjs --level N2 --dest /tmp/ci-demo
           node scripts/check-docs.mjs /tmp/ci-demo
+          node scripts/harden.mjs --dest /tmp/ci-demo --stack static-pages
+          test -f /tmp/ci-demo/.github/workflows/ci.yml || { echo "harden nao instalou CI"; exit 1; }
+          test -f /tmp/ci-demo/.claude/rules/01-invariantes.md || { echo "harden nao instalou rules"; exit 1; }
 
       - name: Encoding PT-BR (anti-mojibake) on all markdown
         run: |
@@ -94,3 +104,11 @@ jobs:
           done
           [ $FOUND -eq 0 ] || exit 1
           echo "No secrets detected"
+
+      - name: Qualidade 100% interna (zero dependencia externa)
+        run: |
+          if grep -rInE 'keep''wright|candi''ani' --exclude-dir=.git . ; then
+            echo "Mencao externa encontrada — a camada de qualidade do lodestar e interna (quality/)."
+            exit 1
+          fi
+          echo "OK: qualidade interna, zero dependencia externa"

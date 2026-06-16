@@ -5,6 +5,23 @@ Todas as mudancas relevantes deste projeto sao documentadas aqui.
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/),
 versionamento segue [SemVer](https://semver.org/lang/pt-BR/).
 
+## [1.1.0] — 2026-06-16
+
+### Added
+
+- **Camada de qualidade embutida (N3).** Novo comando `/lodestar:harden` + engine
+  `scripts/harden.mjs`: instala constituicao equalizada, rules (P1-P5, merge seguro,
+  PR flow, catalisacao de licoes), GitHub Actions (CI + review de IA + merge seguro
+  com duplo gate), validators portaveis, hooks e deploy por stack (Vercel, Supabase,
+  Docker, npm, Pages). Templates na pasta `quality/`.
+- **10 comandos** `/lodestar:*` — entra o `harden`.
+
+### Changed
+
+- O N3 agora **faz** a infra de engenharia internamente. O lodestar virou produto
+  unico: SDD + qualidade num so plugin, sem depender de ferramenta externa.
+- CI ganhou guard que falha se uma dependencia externa de qualidade reaparecer no repo.
+
 ## [1.0.0] — 2026-06-16
 
 Primeiro release como **plugin** do Claude Code.
@@ -23,8 +40,6 @@ Primeiro release como **plugin** do Claude Code.
   - `scripts/check-docs.mjs` — gate de integridade (nucleo SDD + encoding + placeholders).
   - `validators/validate-encoding.cjs` — guardrail anti-mojibake PT-BR.
 - **3 niveis adaptativos** (N1 micro -> N2 app -> N3 sistema) documentados em `NIVEIS.md`.
-- **Combo oficial com keepwright**: o N3 delega a infra de engenharia
-  (CI/PR/merge/deploy) pro [keepwright](https://github.com/leonardocandiani/keepwright).
 - **Templates temperados** pra TS/React/Vite/Supabase (RLS, Edge Functions, multi-tenant).
 - **Exemplo real** `examples/linkfy/` — encurtador multi-tenant com docs preenchidos.
 - **CI** (`.github/workflows/ci.yml`): valida estrutura do plugin, encoding e secrets.
@@ -34,6 +49,6 @@ Primeiro release como **plugin** do Claude Code.
 
 - Governance + `clarify`/`analyze` inspirados no [GitHub Spec Kit](https://github.com/github/spec-kit).
 - Spec viva + `changes/`/`archive` inspirados no [OpenSpec](https://github.com/Fission-AI/OpenSpec).
-- Empacotamento de plugin + estrutura OSS inspirados no [keepwright](https://github.com/leonardocandiani/keepwright).
 
+[1.1.0]: https://github.com/leonardorejani/lodestar/releases/tag/v1.1.0
 [1.0.0]: https://github.com/leonardorejani/lodestar/releases/tag/v1.0.0

@@ -40,7 +40,7 @@ Argumentos crus: `$ARGUMENTS`
    node "${CLAUDE_PLUGIN_ROOT}/scripts/check-docs.mjs" .
    ```
    Mostrar o mapa do que foi criado e o proximo passo (`/lodestar:specify`).
-   **Em N3**, oferecer rodar o **keepwright** pra blindar a engenharia
-   (CI/PR/merge/deploy) — o lodestar nao faz essa parte.
+   **Em N3**, oferecer rodar `/lodestar:harden` pra blindar a engenharia
+   (CI/PR/merge/deploy, rules, validators, deploy por stack) — interno ao lodestar.
 
 Detalhes da metodologia: skill `lodestar`.

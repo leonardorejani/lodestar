@@ -61,9 +61,8 @@ created.forEach((f) => console.log('  + ' + f));
 skipped.forEach((f) => console.log('  = ' + f + ' (ja existe, mantido)'));
 
 if (level === 'N3') {
-  console.log('\nN3 — pra blindar a engenharia (CI/PR/merge/deploy), rode o keepwright:');
-  console.log('  /plugin marketplace add leonardocandiani/keepwright');
-  console.log('  /plugin install keepwright');
+  console.log('\nN3 — pra blindar a engenharia (CI/PR/merge/deploy), rode:');
+  console.log('  /lodestar:harden');
 }
 
 console.log(`\n${created.length} criado(s), ${skipped.length} mantido(s). Proximo: /lodestar:specify`);

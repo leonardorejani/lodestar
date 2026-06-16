@@ -1,6 +1,6 @@
 ---
 name: lodestar
-description: "Conduz Spec-Driven Development (SDD) em qualquer projeto. Invocada quando o usuario roda /lodestar:init (ou qualquer /lodestar:*), pede 'iniciar SDD', 'aplicar spec-driven', 'criar specs do projeto', 'documentar projeto pra IA', 'spec como fonte da verdade', menciona 'lodestar', 'sdd', 'spec kit', 'specify/plan/tasks/implement' — mesmo que so descreva querer estruturar um projeto pra codar com IA sem perder o controle. Gera docs vivos (spec/PRD/architecture/NOW), conduz o fluxo specify->clarify->plan->tasks->analyze->implement->archive em 3 niveis adaptativos (micro->sistema), e em projeto existente faz engenharia reversa dos docs a partir da codebase. NAO use pra montar infra de CI/PR/deploy (delega pra keepwright) nem pra plano pontual de uma unica task (use planning)."
+description: "Conduz Spec-Driven Development (SDD) em qualquer projeto. Invocada quando o usuario roda /lodestar:init (ou qualquer /lodestar:*), pede 'iniciar SDD', 'aplicar spec-driven', 'criar specs do projeto', 'documentar projeto pra IA', 'spec como fonte da verdade', menciona 'lodestar', 'sdd', 'spec kit', 'specify/plan/tasks/implement' — mesmo que so descreva querer estruturar um projeto pra codar com IA sem perder o controle. Gera docs vivos (spec/PRD/architecture/NOW), conduz o fluxo specify->clarify->plan->tasks->analyze->implement->archive em 3 niveis adaptativos (micro->sistema), faz engenharia reversa dos docs em projeto existente, e no N3 instala a camada de qualidade/engenharia (CI/PR/merge/deploy, rules, validators) via /lodestar:harden. NAO use pra plano pontual de uma unica task (use planning)."
 ---
 
 # lodestar — Spec-Driven Development
@@ -55,7 +55,7 @@ Detalhe completo em `NIVEIS.md` (na raiz do plugin). Resumo:
 |---|---|---|
 | **N1 micro** | script, POC, micro-app | `spec.md` + `NOW.md` + `CLAUDE.md` |
 | **N2 cresceu** | app real com features | N1 + `PRD_v1.md` + `architecture.md` + `roadmap.md` + `summary.md` + `licoes.md` + `changes/` |
-| **N3 sistema serio** | multi-tenant, time, prod | N2 + constituicao equalizada + validators no CI + pipeline multi-agente + delega **keepwright** |
+| **N3 sistema serio** | multi-tenant, time, prod | N2 + camada de qualidade via `/lodestar:harden` (constituicao equalizada, rules, CI, validators, deploy) |
 
 Comeca no menor nivel que serve e oferece escalar quando o projeto pede. Nunca impoe overhead.
 
@@ -81,13 +81,13 @@ Os comandos chamam esses scripts pra trabalho deterministico; o modelo cuida do 
    - Novo -> gera docs a partir do que o usuario descrever.
    - Existente -> LE a codebase e faz engenharia reversa (documenta o real, **nunca inventa feature nem propoe refactor**; marca o que ja esta "Done" e sugere a proxima NOW).
 4. **Gerar:** rodar `scaffold.mjs` pro nivel; preencher os docs com o conteudo detectado/descrito.
-5. **Fechar:** rodar `check-docs.mjs` (gate). Mostrar o mapa criado. Em N3, oferecer rodar **keepwright** pra blindar a engenharia.
+5. **Fechar:** rodar `check-docs.mjs` (gate). Mostrar o mapa criado. Em N3, oferecer rodar `/lodestar:harden` pra blindar a engenharia (CI/PR/merge/deploy, rules, validators).
 
 ---
 
 ## Integracoes (reaproveita, nao duplica)
 
-- **keepwright**: o lodestar cuida de spec/plano/execucao; o keepwright cuida da malha de engenharia (git, CI, PR flow, merge seguro, deploy, validators no CI). N3 **delega** pra ele. Combo oficial: lodestar constroi, keepwright mantem. → https://github.com/leonardocandiani/keepwright
+- **Camada de qualidade (`/lodestar:harden`)**: no N3 o lodestar instala a malha de engenharia (constituicao equalizada, rules, CI, PR flow, merge seguro, deploy por stack, validators, hooks) — tudo interno ao plugin.
 - **Agentes especializados** (builder-frontend, builder-backend, reviewer): `/lodestar:implement` despacha pra eles quando existirem no projeto; senao usa o pipeline multi-agente.
 - **planning**: `/lodestar:tasks` pode invocar a skill `planning` em N2+.
 
@@ -109,5 +109,5 @@ Os comandos chamam esses scripts pra trabalho deterministico; o modelo cuida do 
 - Sobrescrever `CLAUDE.md`/docs existentes sem mostrar diff.
 - Em projeto existente: inventar feature ou propor refactor (so documenta o real).
 - Implementar sem passar pelo gate `analyze` (N2/N3).
-- Duplicar o que keepwright ja faz.
+- Rodar `/lodestar:harden` num micro-projeto (a camada de qualidade e so pra N3).
 - Deixar a spec envelhecer: toda feature fechada e arquivada na spec viva.

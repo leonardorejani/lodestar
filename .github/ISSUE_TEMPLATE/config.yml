@@ -1,8 +1,5 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Combo com keepwright (infra de engenharia)
-    url: https://github.com/leonardocandiani/keepwright
-    about: CI/PR/merge/deploy nao sao escopo do lodestar — veja o keepwright.
   - name: Guia de uso
     url: https://github.com/leonardorejani/lodestar/blob/main/GUIA.md
     about: Antes de abrir issue, confira o tutorial pratico.

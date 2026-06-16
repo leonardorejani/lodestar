@@ -28,14 +28,13 @@ O CI roda os mesmos checks. PR com encoding quebrado ou estrutura invalida nao p
 - **PT-BR** com acentuacao correta. Nunca converta pra ASCII "por seguranca".
 - **Commits** curtos, em portugues, sem atribuir a IA.
 - **Templates/prompts**: mudanca de comportamento exige atualizar o `CHANGELOG.md`.
-- **Escopo**: o lodestar faz SDD (spec/plano/execucao). Infra de engenharia
-  (CI/PR/deploy) e escopo do [keepwright](https://github.com/leonardocandiani/keepwright)
-  — proponha la.
+- **Escopo**: o lodestar faz SDD (spec/plano/execucao) E a camada de qualidade
+  no N3 (CI/PR/merge/deploy via `/lodestar:harden`). Tudo num produto so.
 
 ## O que evitamos
 
 - Inflar o kit com features que ninguem pediu.
 - Acoplar a uma stack so (os templates sao temperados, mas o fluxo e generico).
-- Duplicar o que o keepwright ja faz.
+- Inflar a camada de qualidade (N3) alem do necessario.
 
 Obrigado por manter o lodestar simples e util. 🤙
