@@ -1,0 +1,96 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate plugin structure
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Check plugin manifests
+        run: |
+          test -f .claude-plugin/plugin.json || { echo "plugin.json missing"; exit 1; }
+          test -f .claude-plugin/marketplace.json || { echo "marketplace.json missing"; exit 1; }
+          node -e "const p=JSON.parse(require('fs').readFileSync('.claude-plugin/plugin.json','utf8')); if(p.name!=='lodestar'){console.error('plugin.json name != lodestar');process.exit(1)}"
+          node -e "JSON.parse(require('fs').readFileSync('.claude-plugin/marketplace.json','utf8'))" || { echo "marketplace.json invalid JSON"; exit 1; }
+
+      - name: Check commands exist
+        run: |
+          for c in init specify clarify plan tasks analyze implement checklist archive; do
+            test -f "commands/$c.md" || { echo "commands/$c.md missing"; exit 1; }
+          done
+
+      - name: Check skill exists with frontmatter
+        run: |
+          test -f skills/lodestar/SKILL.md || { echo "skills/lodestar/SKILL.md missing"; exit 1; }
+          head -1 skills/lodestar/SKILL.md | grep -q "^---$" || { echo "SKILL.md missing frontmatter"; exit 1; }
+          grep -q "^name: lodestar$" skills/lodestar/SKILL.md || { echo "SKILL.md name missing"; exit 1; }
+          grep -q "^description:" skills/lodestar/SKILL.md || { echo "SKILL.md description missing"; exit 1; }
+
+      - name: Check engine scripts exist
+        run: |
+          for s in scripts/scaffold.mjs scripts/check-docs.mjs validators/validate-encoding.cjs; do
+            test -f "$s" || { echo "$s missing"; exit 1; }
+          done
+
+      - name: Verify all templates present
+        run: |
+          REQUIRED=(
+            "templates/spec.md" "templates/NOW.md" "templates/PRD_v1.md"
+            "templates/architecture.md" "templates/roadmap.md" "templates/summary.md"
+            "templates/licoes.md" "templates/CLAUDE.md" "templates/AGENTS.md"
+          )
+          MISSING=0
+          for f in "${REQUIRED[@]}"; do
+            [ -f "$f" ] || { echo "Missing: $f"; MISSING=$((MISSING+1)); }
+          done
+          [ $MISSING -eq 0 ] || { echo "$MISSING templates missing"; exit 1; }
+          echo "All ${#REQUIRED[@]} templates present"
+
+      - name: Smoke test the engine
+        run: |
+          node scripts/scaffold.mjs --level N2 --dest /tmp/ci-demo
+          node scripts/check-docs.mjs /tmp/ci-demo
+
+      - name: Encoding PT-BR (anti-mojibake) on all markdown
+        run: |
+          mapfile -t MD < <(find . -name '*.md' -not -path './.git/*')
+          node validators/validate-encoding.cjs "${MD[@]}"
+
+      - name: Required docs exist
+        run: |
+          for f in README.md CHANGELOG.md LICENSE GUIA.md NIVEIS.md; do
+            test -f "$f" || { echo "$f missing"; exit 1; }
+          done
+
+      - name: No secrets committed
+        run: |
+          PATTERNS=(
+            "pk_live_[A-Za-z0-9]{20,}"
+            "sk_live_[A-Za-z0-9]{20,}"
+            "sbp_[a-f0-9]{40}"
+            "ghp_[A-Za-z0-9]{36}"
+            "sk-ant-api[0-9]+-[A-Za-z0-9_-]+"
+            "sk-ant-oat01-[A-Za-z0-9_-]+"
+          )
+          FOUND=0
+          for pat in "${PATTERNS[@]}"; do
+            M=$(grep -rEn "$pat" --include="*.md" --include="*.mjs" --include="*.cjs" --include="*.json" --include="*.yml" --exclude-dir=.git . || true)
+            [ -z "$M" ] || { echo "Secret matched: $pat"; echo "$M"; FOUND=$((FOUND+1)); }
+          done
+          [ $FOUND -eq 0 ] || exit 1
+          echo "No secrets detected"

@@ -1,8 +1,11 @@
-# Etapa 7 — CHECKLIST (Definition of Done)
+---
+description: Valida a feature contra os criterios de aceite (Definition of Done)
+argument-hint: '[feature]'
+allowed-tools: Read, Glob, Grep, Bash
+---
 
-Valida que a feature atende os criterios de aceite.
+# /lodestar:checklist
 
-```text
 Monte e rode o checklist de aceite desta feature, amarrado aos criterios da spec.
 
 Para cada criterio de aceite da spec/feature:
@@ -13,9 +16,8 @@ Para cada criterio de aceite da spec/feature:
 - [ ] Sem regressao no que ja funcionava?
 
 Tambem:
-- [ ] Docs atualizados (spec/architecture) se algo mudou?
-- [ ] Encoding e secrets ok (gate analyze passou)?
+- [ ] Docs atualizados (`spec`/`architecture`) se algo mudou?
+- [ ] Encoding e secrets ok (gate `analyze` passou)?
 - [ ] "Would a staff engineer approve this?"
 
-Item nao marcado = nao esta "done". Volta pro implement.
-```
+Item nao marcado = nao esta "done". Volta pro `/lodestar:implement`.

@@ -31,4 +31,5 @@ Siga os documentos na ordem de prioridade. Em conflito, obedeca o de maior prior
 - Commits em PT-BR, curtos, sem atribuir a IA. Em FORK, confirmar repo antes de push.
 
 <!-- N3: ao escalar, este arquivo vira indice equalizado com ponteiro pra TODAS as
-     rules em .claude/rules/ + invariantes criticos no corpo. Rode setup-projeto-qualidade. -->
+     rules em .claude/rules/ + invariantes criticos no corpo. Rode o keepwright
+     (https://github.com/leonardocandiani/keepwright) pra a infra de engenharia. -->

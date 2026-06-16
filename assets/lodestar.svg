@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 220" width="640" height="220" role="img" aria-label="lodestar">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1020"/>
+      <stop offset="1" stop-color="#15203f"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffe79a"/>
+      <stop offset="1" stop-color="#f6c343"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ffd86b" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#ffd86b" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect x="0" y="0" width="640" height="220" rx="22" fill="url(#bg)"/>
+
+  <!-- estrela-guia -->
+  <circle cx="120" cy="110" r="78" fill="url(#glow)"/>
+  <path d="M120,38 L137,93 L192,110 L137,127 L120,182 L103,127 L48,110 L103,93 Z"
+        fill="url(#gold)" stroke="#fff3cf" stroke-width="1.5" stroke-linejoin="round"/>
+  <circle cx="120" cy="110" r="9" fill="#0b1020"/>
+
+  <!-- sparkles -->
+  <path d="M214,58 l4,10 l10,4 l-10,4 l-4,10 l-4,-10 l-10,-4 l10,-4 Z" fill="#cfe3ff" opacity="0.85"/>
+  <path d="M196,168 l3,7 l7,3 l-7,3 l-3,7 l-3,-7 l-7,-3 l7,-3 Z" fill="#cfe3ff" opacity="0.6"/>
+
+  <!-- texto -->
+  <text x="250" y="108" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="62" font-weight="700" fill="#f5f7fb">lodestar</text>
+  <text x="252" y="146" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="22" fill="#8aa0c8">Spec-Driven Development &#183; siga a spec, n&#227;o o caos</text>
+  <text x="252" y="178" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="16" fill="#5f7099">plugin pro Claude Code &#183; PT-BR &#183; adaptativo (N1&#8594;N3)</text>
+</svg>

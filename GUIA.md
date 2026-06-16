@@ -1,4 +1,4 @@
-# GUIA — Como aplicar o SDD Kit na pratica
+# GUIA — Como aplicar o lodestar na pratica
 
 Tutorial direto. Do zero ao primeiro ciclo completo.
 
@@ -6,48 +6,37 @@ Tutorial direto. Do zero ao primeiro ciclo completo.
 
 ## Instalacao (uma vez)
 
-Nada a instalar. A skill ja vive em `~/.claude/skills/sdd-init/`. Em qualquer projeto:
-
 ```
-/sdd-init
+/plugin marketplace add leonardorejani/lodestar
+/plugin install lodestar
+/reload-plugins
 ```
 
-O comando detecta a stack, pergunta o nivel, e gera os docs. Fim.
+Pronto. Em qualquer projeto, rode `/lodestar:init` — ele detecta a stack,
+pergunta o nivel e gera os docs.
+
+> Sem plugin? Da pra usar como skill standalone: `./install.sh` (ou `install.ps1`),
+> ou `git clone ... ~/.claude/skills/lodestar`.
 
 ---
 
 ## Caso A — Projeto NOVO (do zero)
 
 1. Cria a pasta do projeto e abre o Claude nela.
-2. Roda `/sdd-init`.
+2. Roda `/lodestar:init`.
 3. Responde: nivel sugerido (ex: N2) e descreve a visao do produto (10 min).
 4. O comando gera `docs/` + `CLAUDE.md`. O unico arquivo que voce preenche de cabeca e o `PRD_v1.md` (em N2+).
 5. Comeca o ciclo:
 
 ```
-# 1. especifica a primeira feature
-"specify: cadastro de usuario com login por email"
-
-# 2. a IA te faz 2-4 perguntas pra travar ambiguidades (clarify)
-#    responde rapido
-
-# 3. plano tecnico + ADRs
-"plan"
-
-# 4. decompoe em tasks verificaveis -> NOW.md
-"tasks"
-
-# 5. GATE: consistencia + encoding + secrets
-"analyze"
-
-# 6. implementa (solo / 4-agentes / agentes do projeto)
-"implement"
-
-# 7. checklist de aceite (Definition of Done)
-"checklist"
-
-# 8. fecha: arquiva o delta na spec viva + atualiza summary
-"archive"
+/lodestar:specify cadastro de usuario com login por email
+/lodestar:clarify      # a IA te faz 2-4 perguntas pra travar ambiguidades
+/lodestar:plan         # plano tecnico + ADRs
+/lodestar:tasks        # decompoe em tasks verificaveis -> NOW.md
+/lodestar:analyze      # GATE: consistencia + encoding + secrets
+/lodestar:implement    # executa (solo / agentes / pipeline)
+/lodestar:checklist    # Definition of Done
+/lodestar:archive      # arquiva o delta na spec viva + summary
 ```
 
 Na pratica voce nem decora isso: pede *"implementa o cadastro de usuario"* e a skill roteia pelas etapas, parando pra clarificar quando precisa.
@@ -59,8 +48,8 @@ Na pratica voce nem decora isso: pede *"implementa o cadastro de usuario"* e a s
 O kit funciona com app quase-pronto. Ele NAO mexe no codigo — so cria a camada de specs por cima.
 
 1. Abre o Claude na raiz do app.
-2. Roda `/sdd-init`.
-3. Escolhe "projeto existente". A skill LE a codebase (rotas, models, migrations, RLS, componentes) e faz **engenharia reversa**:
+2. Roda `/lodestar:init` (ele detecta a codebase e entra no modo existente).
+3. A skill LE a codebase (rotas, models, migrations, RLS, componentes) e faz **engenharia reversa**:
    - `spec.md` = o comportamento que o codigo JA tem
    - `architecture.md` = a stack/arquitetura real + ADRs inferidos
    - `summary.md` = o que ja esta "Done"
@@ -80,7 +69,7 @@ O kit funciona com app quase-pronto. Ele NAO mexe no codigo — so cria a camada
 2. Pede pra IA implementar **apenas** o NOW.
 3. Mudou regra/contrato/schema? Atualiza `spec.md` no mesmo PR.
 4. Mudou decisao de arquitetura? Atualiza `architecture.md` (ADR) no mesmo PR.
-5. Fechou a feature? Roda `archive` — o delta vai pra spec viva.
+5. Fechou a feature? Roda `/lodestar:archive` — o delta vai pra spec viva.
 6. Tomou bronca/corrigiu algo? Registra em `licoes.md`.
 
 ---
@@ -100,8 +89,8 @@ Se ele nao souber citar a fonte nos docs, ou esta inventando, ou a spec esta inc
 Veja `NIVEIS.md`. Resumo: comeca pequeno, sobe quando doer.
 - 2a feature/deploy -> N2
 - multi-tenant/clientes/time -> N3
-- CI/PR/deploy automatico -> N3 + `setup-projeto-qualidade` (o /sdd-init te oferece isso)
-- execucao pesada multi-fase -> N3 + GSD
+- CI/PR/deploy automatico -> N3 + keepwright (o /lodestar:init te oferece isso)
+- execucao pesada multi-fase -> N3 + executor de fases
 
 ---
 
@@ -122,10 +111,10 @@ Veja `NIVEIS.md`. Resumo: comeca pequeno, sobe quando doer.
 
 ## FAQ
 
-**Preciso seguir as 8 etapas sempre?** Nao. Em N1 sao 3. Em N2/N3 use o que a feature pede; so nao pule `analyze` antes de implementar.
+**Preciso seguir as 9 etapas sempre?** Nao. Em N1 sao 3. Em N2/N3 use o que a feature pede; so nao pule `/lodestar:analyze` antes de implementar.
 
-**E se eu ja uso GSD?** Use o SDD pra gerar `spec.md`/`PRD` e entregue pro `/gsd:plan-phase --prd`. SDD = entrada leve; GSD = execucao pesada.
+**E a infra de CI/PR/deploy?** Nao e escopo do lodestar — e do keepwright (https://github.com/leonardocandiani/keepwright). O N3 te aponta pra ele. Combo: lodestar constroi, keepwright mantem.
 
 **Funciona fora da minha stack?** Sim. Os templates vem temperados pra TS/React/Supabase, mas as secoes especificas viram "N/A" em outras stacks.
 
-**Sobrescreve meu CLAUDE.md?** Nunca sem mostrar o diff e pedir ok.
+**Sobrescreve meu CLAUDE.md?** Nunca sem mostrar o diff e pedir ok. O scaffold pula arquivos que ja existem.

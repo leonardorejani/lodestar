@@ -1,8 +1,11 @@
-# Etapa 4 — TASKS (decomposicao verificavel)
+---
+description: Decompoe o plano em tarefas pequenas, ordenadas e verificaveis
+argument-hint: '[feature]'
+allowed-tools: Read, Glob, Grep, Write, Edit
+---
 
-Quebra o plano em tarefas pequenas e ordenadas.
+# /lodestar:tasks
 
-```text
 Com o plano pronto, decomponha em tarefas.
 
 Regras de decomposicao:
@@ -12,9 +15,8 @@ Regras de decomposicao:
 - Fase final sempre inclui: testes + review + checklist de aceite.
 
 Saida:
-- N1: escreva direto em docs/NOW.md (objetivo + criterios de pronto).
-- N2+: pode usar a skill `planning` e salvar em tasks/todo.md, mantendo NOW.md
-  com a task ativa do momento.
+- N1: escreva direto em `docs/NOW.md` (objetivo + criterios de pronto).
+- N2+: pode usar a skill `planning` e salvar em `tasks/todo.md`, mantendo
+  `NOW.md` com a task ativa do momento.
 
 Nao comece a implementar aqui. So decomponha.
-```

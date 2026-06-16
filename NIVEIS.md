@@ -52,9 +52,9 @@ O kit comeca no menor nivel que serve e escala sob demanda. Voce nunca paga over
 - **Validators no CI** — encoding + sync do CLAUDE.md + secrets rodando no pipeline.
 - **Pipeline 4-agentes** na execucao (Investigar -> Analisar -> Planejar -> Refinar) e/ou agentes especializados do projeto.
 
-**Delegacao:** N3 chama a skill `setup-projeto-qualidade` pra montar a infra de engenharia (git, CI/CD, PR flow, merge seguro com duplo gate, deploy por stack, hooks, CODEOWNERS). O SDD **nao reimplementa** isso.
+**Delegacao:** N3 chama o **keepwright** pra montar a infra de engenharia (git, CI/CD, PR flow, merge seguro com duplo gate, deploy por stack, hooks, CODEOWNERS). O lodestar **nao reimplementa** isso. → https://github.com/leonardocandiani/keepwright
 
-**Integracao GSD:** projetos grandes podem usar o SDD como porta de entrada (gera `spec.md`/`PRD`) e entregar pro `/gsd:plan-phase --prd` pra execucao multi-fase com waves.
+**Integracao com executor de fases:** projetos grandes podem usar o lodestar como porta de entrada (gera `spec.md`/`PRD`) e entregar pro seu executor de fases multi-fase (com waves de paralelismo).
 
 ---
 
@@ -65,7 +65,7 @@ O kit comeca no menor nivel que serve e escala sob demanda. Voce nunca paga over
 | E so um script/POC? | N1 |
 | Tem mais de uma feature ou deploy? | N2 |
 | E multi-tenant / tem clientes / time? | N3 |
-| Vai ter CI/CD, PR flow, deploy automatico? | N3 + `setup-projeto-qualidade` |
-| Execucao multi-fase pesada com paralelismo? | N3 + GSD |
+| Vai ter CI/CD, PR flow, deploy automatico? | N3 + keepwright |
+| Execucao multi-fase pesada com paralelismo? | N3 + executor de fases |
 
 Na duvida: comeca em N2. Cobre 80% dos casos sem overhead exagerado.
